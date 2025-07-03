@@ -1,4 +1,4 @@
-package com.daniel.azevedo.servico;
+package com.daniel.azevedo.mensagem;
 
 public class Notificador {
     public void enviarEmail(String destino, String mensagem) {

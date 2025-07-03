@@ -1,13 +1,12 @@
-package com.daniel.azevedo.calculadora;
+package com.daniel.azevedo.mensagem;
 
-import com.daniel.azevedo.servico.MensagemService;
-import com.daniel.azevedo.servico.Notificador;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,4 +23,16 @@ public class MensagemServiceTest {
         mensagemService.processarMensagem("Daniel", "daniel@teste.com");
         verify(notificador).enviarEmail("daniel@teste.com", "Olá Daniel, sua conta foi ativada!");
     }
+
+    @Test
+    void deveEnviarEmailDuasVezes() {
+        mensagemService.processarMensagem("Daniel", "daniel@teste.com");
+        mensagemService.processarMensagem("Daniel", "daniel@teste.com");
+
+
+        verify(notificador, times(2))
+                .enviarEmail("daniel@teste.com", "Olá Daniel, sua conta foi ativada!");
+
+    }
+
 }

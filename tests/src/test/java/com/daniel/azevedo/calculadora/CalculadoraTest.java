@@ -15,51 +15,75 @@ public class CalculadoraTest {
 
     @BeforeAll
     static void iniciar() {
+        // Setup geral antes de todos os testes
         System.out.println("Iniciando a bateria de testes");
     }
 
     @AfterAll
     static void finalizar() {
+        // Cleanup geral após todos os testes
         System.out.println("Finalizando a bateria de testes");
     }
 
     @BeforeEach
     void setUp() {
+        // Arrange comum a todos os testes
         calculadora = new Calculadora();
     }
 
     @Nested
     @DisplayName("Testes de operações aritméticas")
     class OperacoesAritmeticasTest {
+
         @Test
         @DisplayName("Deve somar corretamente dois inteiros")
         void deveSomarDoisNumerosCorretamente() {
-            assertEquals(5, calculadora.somar(2, 3));
+            // Arrange: já feito em @BeforeEach
+
+            // Act
+            int resultado = calculadora.somar(2, 3);
+
+            // Assert
+            assertEquals(5, resultado);
         }
 
         @Test
         void deveSubtrairDoisNumerosCorretamente() {
-            assertEquals(-4, calculadora.subtrair(4, 8));
+            // Act
+            int resultado = calculadora.subtrair(4, 8);
+
+            // Assert
+            assertEquals(-4, resultado);
         }
 
         @Test
         void deveMultiplicarDoisNumerosCorretamente() {
-            assertEquals(45, calculadora.multiplicar(5, 9));
+            // Act
+            int resultado = calculadora.multiplicar(5, 9);
+
+            // Assert
+            assertEquals(45, resultado);
         }
 
         @Test
         void deveDividirDoisNumerosCorretamente() {
-            assertEquals(3, calculadora.dividir(9, 3));
+            // Act
+            int resultado = calculadora.dividir(9, 3);
+
+            // Assert
+            assertEquals(3, resultado);
         }
 
         @Test
         void deveLancarExcecaoQuandoDividirPorZero() {
+            // Act + Assert (ação e verificação ao mesmo tempo)
             assertThrows(ArithmeticException.class, () -> calculadora.dividir(5, 0));
         }
 
         @Test
         @DisplayName("Deve validar todas as operações básicas")
         void deveTestarVariosMetodosDeUmaVez() {
+            // Assert (com múltiplos Acts embutidos)
             assertAll(
                     () -> assertEquals(5, calculadora.somar(2, 3)),
                     () -> assertEquals(-4, calculadora.subtrair(4, 8)),
@@ -70,31 +94,50 @@ public class CalculadoraTest {
 
         @Test
         void deveRetornarVerdadeiroParaNumerosPares() {
-            assertTrue(calculadora.ehPar(10));
+            // Act
+            boolean resultado = calculadora.ehPar(10);
+
+            // Assert
+            assertTrue(resultado);
         }
 
         @Test
         void deveRetornarFalsoParaNumerosImpares() {
-            assertFalse(calculadora.ehPar(7));
+            // Act
+            boolean resultado = calculadora.ehPar(7);
+
+            // Assert
+            assertFalse(resultado);
         }
     }
 
     @Test
     void deveRetornarDescricaoNaoNula() {
-        assertNotNull(calculadora.gerarDescricao());
+        // Act
+        String descricao = calculadora.gerarDescricao();
+
+        // Assert
+        assertNotNull(descricao);
     }
 
     @Disabled("Ainda não implementado")
     @Test
     void testeDeFuncionalidade() {
-        // Teste placeholder para futuras funcionalidades
+        // Arrange
+        // Act
+        // Assert
+        // (ainda não implementado)
     }
 
     @ParameterizedTest
     @ValueSource(ints = {2, 4, 6, 8, 10})
     @DisplayName("Deve retornar true para todos os números pares")
     void deveRetornarVerdadeiroParaTodosOsNumerosPares(int numero) {
-        assertTrue(calculadora.ehPar(numero));
+        // Act
+        boolean resultado = calculadora.ehPar(numero);
+
+        // Assert
+        assertTrue(resultado);
     }
 
     @ParameterizedTest
@@ -105,6 +148,10 @@ public class CalculadoraTest {
     })
     @DisplayName("Deve somar corretamente vários pares de números")
     void deveSomarCorretamenteVariosCasos(int a, int b, int esperado) {
-        assertEquals(esperado, calculadora.somar(a, b));
+        // Act
+        int resultado = calculadora.somar(a, b);
+
+        // Assert
+        assertEquals(esperado, resultado);
     }
 }

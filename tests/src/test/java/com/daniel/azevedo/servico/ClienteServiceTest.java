@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,4 +31,27 @@ class ClienteServiceTest {
 
         assertEquals("Bem-vindo, Daniel!", mensagem);
     }
+
+    @Test
+    void deveRetornarMensagemDeErroSeEmailNaoForEncontrado() {
+        when(clienteRepository.buscarNomePorEmail("naoexiste@email.com"))
+                .thenReturn(Optional.empty());
+
+        String mensagem = clienteService.gerarMensagemDeBoasVindas("naoexiste@email.com");
+
+        assertEquals("Usuário não encontrado.", mensagem);
+
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoRepositorioFalha() {
+        when(clienteRepository.buscarNomePorEmail("falha@email.com"))
+                .thenThrow(new RuntimeException("Erro de conexão"));
+
+        assertThrows(RuntimeException.class,
+                () -> clienteService.gerarMensagemDeBoasVindas("falha@email.com"));
+
+    }
+
+
 }

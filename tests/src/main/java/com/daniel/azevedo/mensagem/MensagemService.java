@@ -1,6 +1,7 @@
-package com.daniel.azevedo.servico;
+package com.daniel.azevedo.mensagem;
 
 public class MensagemService {
+
     private Notificador notificador;
 
     public MensagemService(Notificador notificador) {
@@ -11,4 +12,5 @@ public class MensagemService {
         String mensagem = "Olá " + nome + ", sua conta foi ativada!";
         notificador.enviarEmail(email, mensagem);
     }
+
 }
